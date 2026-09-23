@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1785784793700,
+      "tag": "0000_confused_major_mapleleaf",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1785784800000,
+      "tag": "0001_upload_file_artifacts",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1785784900000,
+      "tag": "0002_systems",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1786458992302,
+      "tag": "0003_run_lifecycle",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1787587200000,
+      "tag": "0004_integrity_hardening",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789412400000,
+      "tag": "0005_pipeline_lease",
+      "breakpoints": true
+    }
+  ]
+}

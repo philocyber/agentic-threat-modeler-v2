@@ -1,0 +1,45 @@
+# Build context contains code and reproducible reference data only.
+node_modules
+.pnpm-store
+.next
+out
+build
+dist
+promo
+.git
+.github
+.cursor
+.agents
+.codex
+.impeccable
+.vscode
+.idea
+.env*
+!.env.example
+!.env.docker.example
+.envrc
+.keys
+*.pem
+*.key
+*.log
+*.tsbuildinfo
+.DS_Store
+__pycache__
+coverage
+.nyc_output
+data
+output
+tmp
+knowledge_base/**
+!knowledge_base/README.md
+docs/archive
+
+# Local review history and agent execution reports
+docs/development/cleanup-status.md
+docs/development/validation-*.json
+
+# Presentation videos retained locally
+public/Argus-Espanol-1080p.mp4
+public/Argus-English-1080p.mp4
+public/AgenticTM-Espanol-1080p.mp4
+public/AgenticTM-English-1080p.mp4

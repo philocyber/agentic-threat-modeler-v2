@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: ledger --default;
+}
+@plugin "@tailwindcss/typography";
+
+@plugin "daisyui/theme" {
+  name: "ledger";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #fcfcfb;
+  --color-base-300: #e4e4e2;
+  --color-base-content: #111111;
+  --color-primary: #111111;
+  --color-primary-content: #ffffff;
+  --color-secondary: #666666;
+  --color-secondary-content: #ffffff;
+  --color-accent: #111111;
+  --color-accent-content: #ffffff;
+  --color-neutral: #111111;
+  --color-neutral-content: #ffffff;
+  --color-success: #555555;
+  --color-warning: #f96715;
+  --color-error: #dd2b37;
+  --radius-selector: 0.125rem;
+  --radius-field: 0.125rem;
+  --radius-box: 0.125rem;
+}
+
+:root {
+  color-scheme: light;
+  --philo-ink: #111111;
+  --philo-text: #333333;
+  --philo-support: #666666;
+  --philo-metadata: #8c8c8c;
+  --philo-line-strong: #cacac7;
+  --philo-line: #e4e4e2;
+  --philo-surface: #ffffff;
+  --philo-surface-alt: #fcfcfb;
+}
+
+.run-tools-menu { position: absolute; right: 1rem; top: 0.5rem; }
+@media (min-width: 640px) {
+  .run-tools-menu { position: relative; right: auto; top: auto; }
+}
+
+body {
+  min-width: 320px;
+  background: #f5f5f3;
+  color: #333333;
+  font-family: var(--font-inter), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.workbench-heading {
+  font-family: var(--font-archivo), Arial, sans-serif;
+}
+
+code,
+pre,
+kbd,
+.font-mono {
+  font-family: var(--font-jetbrains-mono), "Courier New", monospace;
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: 0.125rem;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection { background: #e0e0dd; color: #111111; }
+
+.app-grid {
+  background:
+    radial-gradient(ellipse at 14% -12%, rgba(17, 17, 17, 0.035), transparent 38%),
+    #f5f5f3;
+}
+
+.ledger-panel {
+  border: 1px solid #cacac7;
+  border-radius: 0.125rem;
+  background: #fcfcfb;
+}
+
+.ledger-label {
+  color: #666666;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ledger-rule { border-color: #e4e4e2; }
+
+.workbench-panel {
+  border: 1px solid #cacac7;
+  border-radius: 0.125rem;
+  background: #ffffff;
+}
+
+.workbench-heading {
+  color: #111111;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.philo-primary-action {
+  border-radius: 0.125rem;
+  background: #111111;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.philo-primary-action:hover { background: #333333; }
+.philo-primary-action:active { transform: translateY(1px); }
+.philo-primary-action:disabled { cursor: not-allowed; opacity: 0.5; transform: none; }
+
+.priority-critical { @apply bg-red-50 text-red-800 ring-1 ring-red-200; }
+.priority-high { @apply bg-orange-50 text-orange-900 ring-1 ring-orange-200; }
+.priority-medium { @apply bg-amber-50 text-amber-900 ring-1 ring-amber-200; }
+.priority-low { @apply bg-indigo-50 text-indigo-800 ring-1 ring-indigo-200; }
+
+.dot-critical { background: #dd2b37; }
+.dot-high { background: #f96715; }
+.dot-medium { background: #8c8c8c; }
+.dot-low { background: #666666; }
+
+.process-track {
+  background: linear-gradient(90deg, #111111 var(--progress, 0%), #e4e4e2 var(--progress, 0%));
+}
+
+@keyframes signal-breathe {
+  0%, 100% { opacity: 0.5; transform: scaleX(0.98); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+.signal-breathe { animation: signal-breathe 1.6s ease-in-out infinite; }
+
+@keyframes step-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.animate-step-pulse { animation: step-pulse 1.4s ease-in-out infinite; }
+
+:focus-visible {
+  outline: 2px solid #6b74d5;
+  outline-offset: 2px;
+}
+
+.results-tabs { position: sticky; top: 0; }
+html { scroll-padding-bottom: 5rem; }
+[id="selected-threat-details"],
+[id="review-finding"],
+[id^="architecture-"] { scroll-margin-top: 5rem; }
+.review-workspace:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
+@media (min-width: 1100px) {
+  .review-workspace { grid-template-columns: minmax(0, 1fr) minmax(360px, 42%); }
+}
+@media (min-width: 1024px) {
+  .results-tabs { top: 73px; }
+  html { scroll-padding-bottom: 0; }
+  [id="selected-threat-details"],
+  [id="review-finding"],
+  [id^="architecture-"] { scroll-margin-top: 9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-breathe,
+  .animate-step-pulse {
+    animation: none;
+  }
+
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

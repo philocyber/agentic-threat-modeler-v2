@@ -1,0 +1,94 @@
+.page { padding-bottom: 4rem; }
+.page :global(.workbench-panel) { border-color: #dce2d9; border-radius: 20px; }
+.page :global(input), .page :global(select), .page :global(textarea) { border-radius: 10px; }
+.page :global(details > summary) { border-radius: 12px; }
+.page :global(button[role='tab']) { border-radius: 8px; }
+.header {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.8rem;
+  overflow: hidden;
+  padding: 1.7rem 2rem;
+  border: 1px solid #d5ddd3;
+  border-radius: 22px;
+  background: #edf1eb;
+}
+.header::after {
+  position: absolute;
+  right: -55px;
+  top: -100px;
+  width: 270px;
+  aspect-ratio: 1;
+  border: 1px solid rgb(56 77 58 / 12%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+.headerCopy, .providerHint { position: relative; z-index: 1; }
+.eyebrow { color: #526655; font-size: .65rem; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
+.header h1 {
+  margin-top: .6rem;
+  color: #182019;
+  font-family: var(--font-archivo), Arial, sans-serif;
+  font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: 1.08;
+}
+.header h1 span { color: #c17d61; }
+.headerCopy > p:last-child { max-width: 570px; margin-top: .7rem; color: #5f6d62; font-size: .77rem; line-height: 1.55; }
+.providerHint {
+  width: min(100%, 300px);
+  flex-shrink: 0;
+  padding: .75rem .95rem;
+  border: 1px solid #cbd5c9;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 80%);
+  color: #4e5e51;
+  font-size: .69rem;
+  line-height: 1.5;
+}
+.providerHint summary { cursor: pointer; font-weight: 700; }
+.providerHint p { margin-top: .6rem; }
+.projectStatus {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .8rem 1rem;
+  border: 1px solid #d4ddd2;
+  border-radius: 12px;
+  background: #f0f3ef;
+  color: #354338;
+  font-size: .76rem;
+}
+.projectStatus::before { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #3c6946; content: ""; }
+.contextPanel { overflow: hidden; background: #fff; }
+.contextHeading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; padding: .25rem 0 1.2rem; border-bottom: 1px solid #e7ece5; }
+.contextHeading p { color: #758478; font-size: .62rem; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
+.contextHeading h2 { margin-top: .5rem; color: #1b251d; font-family: var(--font-archivo), Arial, sans-serif; font-size: clamp(1.55rem, 2.4vw, 2.1rem); font-weight: 600; letter-spacing: -.05em; line-height: 1.12; }
+.contextHeading > span { max-width: 235px; color: #6d796f; font-size: .72rem; line-height: 1.45; }
+.contextPanel :global(details) { border-radius: 12px; background: #f7f9f5; }
+.contextPanel :global(textarea) { border-color: #cbd8c9; background: #fcfdfa; }
+.contextPanel :global(textarea:focus) { border-color: #314b36; }
+.configPanel { overflow: hidden; background: #fff; }
+.configPanel > summary { padding-block: 1.1rem; background: #f7f9f5; }
+.configPanel > summary:hover { background: #eef3ec; }
+.preflight { overflow: hidden; padding: 1.5rem 1.65rem; border-radius: 20px; background: radial-gradient(circle at 92% 5%, #465447, transparent 36%), #1b211c; color: #fff; }
+.preflight > p:first-child { color: #f1b99f; }
+.preflight h2 { color: #fff; font-family: var(--font-archivo), Arial, sans-serif; font-size: 1.55rem; font-weight: 600; letter-spacing: -.04em; }
+.preflight dl { gap: .55rem; margin-top: 1.2rem; }
+.preflight dl > div { min-width: 0; padding: .8rem 1rem; border: 1px solid rgb(255 255 255 / 17%); border-radius: 12px; background: rgb(255 255 255 / 7%); }
+.preflight dt { color: #e3c9b8; }
+.preflight dd { margin-top: .28rem; color: #f1f5ef; overflow-wrap: anywhere; }
+.preflight > p:last-child { color: #cbd8cc; }
+.preflight a { color: #fff; }
+
+@media (max-width: 650px) {
+  .header { flex-direction: column; align-items: start; gap: 1rem; padding: 1.4rem; border-radius: 18px; }
+  .header h1 { font-size: 2rem; }
+  .providerHint { width: 100%; }
+  .contextHeading { align-items: start; flex-direction: column; gap: .5rem; }
+  .preflight { padding: 1.2rem; border-radius: 17px; }
+}

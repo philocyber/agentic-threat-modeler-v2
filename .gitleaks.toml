@@ -1,0 +1,7 @@
+title = "Argus Gitleaks configuration"
+
+[extend]
+useDefault = true
+
+# Do not exclude tests or editor rules. Synthetic canaries verify both paths.
+# Test placeholders must remain obviously synthetic under the default rules.

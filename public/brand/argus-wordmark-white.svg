@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="100" viewBox="0 0 440 100" role="img" aria-label="Argus">
+  <g fill="none" stroke="#f8f7f4" stroke-width="5" stroke-linecap="round">
+    <path d="M8 50C22 28 42 17 63 17s41 11 55 33C104 72 84 83 63 83S22 72 8 50Z"/>
+    <circle cx="63" cy="50" r="17"/>
+  </g>
+  <circle cx="63" cy="50" r="6" fill="#e89370"/>
+  <text x="142" y="69" fill="#f8f7f4" font-family="Arial, Helvetica, sans-serif" font-size="63" font-weight="700" letter-spacing="7">ARGUS</text>
+</svg>

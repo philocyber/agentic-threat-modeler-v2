@@ -1,0 +1,32 @@
+.prompt {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.prompt > div { max-width: 100%; overflow-x: auto; }
+
+.prompt :is(h1, h2, h3) {
+  color: #111;
+  font-family: var(--font-archivo), Arial, sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.prompt h1 { font-size: 1.5rem; }
+.prompt h2 { font-size: 1.25rem; }
+.prompt h3 { font-size: 1.1rem; }
+.prompt :is(ul, ol) { padding-left: 1.4rem; }
+.prompt a { color: #111; text-decoration: underline; text-underline-offset: 3px; }
+.prompt :is(code, pre) { overflow-wrap: normal; }
+
+.prompt :is(h1, h2, h3) { margin: 1.25rem 0 0.6rem; }
+.prompt h1 { margin-top: 0; border-bottom: 1px solid #cacac7; padding-bottom: 0.5rem; }
+.prompt :is(h2, h3) { border-bottom: 1px solid #e4e4e2; padding-bottom: 0.35rem; }
+.prompt table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.75rem; line-height: 1.45; }
+.prompt :is(th, td) { padding: 0.55rem 0.65rem; border-bottom: 1px solid #e4e4e2; vertical-align: top; text-align: left; }
+.prompt th { background: #f1f1f0; color: #111; font-weight: 700; }
+.prompt td:first-child { font-family: var(--font-jetbrains-mono), monospace; font-weight: 650; white-space: nowrap; }
+.prompt pre { max-width: 100%; overflow-x: auto; padding: 0.9rem; background: #f1f1f0; color: #111; font-size: 0.72rem; line-height: 1.35; }
+.prompt pre code { white-space: pre; }

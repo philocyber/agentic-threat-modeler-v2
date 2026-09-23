@@ -1,0 +1,22 @@
+:root {
+  --radius-selector: 0.6rem;
+  --radius-field: 0.6rem;
+  --radius-box: 1rem;
+}
+
+body { background: #f5f6f3; }
+
+.app-grid {
+  background: radial-gradient(ellipse at 14% -12%, rgba(44, 62, 42, 0.045), transparent 38%), #f5f6f3;
+}
+
+button, input, select, textarea { border-radius: .55rem; }
+
+.ledger-panel { border-radius: .8rem; }
+
+.workbench-panel {
+  border-radius: 1rem;
+  box-shadow: 0 8px 28px rgba(25, 30, 24, 0.025);
+}
+
+.philo-primary-action { border-radius: .6rem; }

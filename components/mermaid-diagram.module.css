@@ -1,0 +1,71 @@
+.frame {
+  height: 420px;
+}
+
+.frame :global(.react-transform-component) {
+  transform-origin: 0 0;
+}
+
+/* Mermaid embeds its theme in the SVG. The app CSP blocks that inline theme,
+   so the essential graph colors live in this external stylesheet. */
+.frame :global(.flowchart .cluster > rect) {
+  fill: #fcfcfb !important;
+  stroke: #cacac7 !important;
+  stroke-width: 1.25px;
+  stroke-dasharray: 8 6;
+}
+
+.frame :global(.flowchart .node .label-container > path),
+.frame :global(.flowchart .node .label-container > rect),
+.frame :global(.flowchart .node .label-container > polygon),
+.frame :global(.flowchart .node .label-container > ellipse),
+.frame :global(.flowchart .node > .label-container) {
+  fill: #f5f5f3 !important;
+  stroke: #666 !important;
+  stroke-width: 1.5px;
+}
+
+.frame :global(.flowchart .node.external .label-container > path),
+.frame :global(.flowchart .node.actor .label-container > path) {
+  fill: #fff8e8 !important;
+}
+
+.frame :global(.flowchart .node.store .label-container > path),
+.frame :global(.flowchart .node.store .label-container > rect),
+.frame :global(.flowchart .node.store > .label-container) {
+  fill: #fff !important;
+  stroke: #218848 !important;
+}
+
+.frame :global(.flowchart .cluster-label .background),
+.frame :global(.flowchart .edgeLabel .background) {
+  fill: #fcfcfb !important;
+}
+
+.frame :global(.flowchart .node .label rect),
+.frame :global(.flowchart .node .background) {
+  fill: transparent !important;
+  stroke: none !important;
+}
+
+.frame :global(.flowchart text),
+.frame :global(.flowchart tspan) {
+  fill: #111 !important;
+}
+
+.frame :global(.flowchart .flowchart-link) {
+  fill: none !important;
+  stroke: #666 !important;
+  stroke-width: 1.25px;
+}
+
+.frame :global(.flowchart .arrowMarkerPath) {
+  fill: #666 !important;
+  stroke: #666 !important;
+}
+
+@media (max-width: 639px) {
+  .frame {
+    height: 340px;
+  }
+}

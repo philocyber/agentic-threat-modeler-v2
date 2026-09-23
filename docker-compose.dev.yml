@@ -1,0 +1,10 @@
+services:
+  # Local-only convenience override. Production-like `docker compose up` keeps
+  # both data stores inside the compose network.
+  chromadb:
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  postgres-db:
+    ports:
+      - "127.0.0.1:5432:5432"

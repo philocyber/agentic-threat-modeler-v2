@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "app/**/{page,layout,route,error,not-found,loading,template,default}.{ts,tsx}",
+    "scripts/**/*.ts",
+    "**/__tests__/**/*.test.ts"
+  ],
+  "ignoreDependencies": ["tailwindcss", "daisyui", "@tailwindcss/typography"],
+  "project": [
+    "app/**/*.{ts,tsx}",
+    "components/**/*.{ts,tsx}",
+    "lib/**/*.{ts,tsx}",
+    "scripts/**/*.ts",
+    "*.ts",
+    "*.mjs"
+  ]
+}

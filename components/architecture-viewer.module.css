@@ -1,0 +1,21 @@
+.workspace { min-width: 0; }
+.workspace > section { min-width: 0; }
+.workspace :global(.workbench-heading) { color: #1c2a1e; font-family: var(--font-archivo), Arial, sans-serif; font-weight: 650; letter-spacing: -.04em; }
+.workspace :global(.rounded-sm.border) { border-radius: 12px; }
+.workspace :global(details.border) { border-color: #dce4d9; border-radius: 12px; background: #f8faf6; }
+.workspace :global(.overflow-x-auto) { scrollbar-width: thin; }
+.coverage { border-color: #dce5da; border-radius: 16px; background: #f3f7f1; }
+.coverage p { max-width: 1050px; }
+.canvas { border-color: #d2ddd0; border-radius: 18px; background: #f9fbf8; }
+.tableWrap { border-color: #dfe6dc; border-radius: 15px; }
+.tableWrap :global(thead) { background: #eef3ec; }
+.tableWrap :global(th) { color: #66776a; }
+.tableWrap :global(tbody tr:hover) { background: #f8faf6; }
+.threatMap { border-color: #dfe6dc; border-radius: 15px; }
+.threatMapRow > div:first-child { padding: 1rem 1.2rem; }
+.threatMapRow > div:last-child { padding: 1rem 1.2rem; background: #f8faf7; }
+.threatMapMitigation { margin-top: .35rem; color: #27342a; font-size: .82rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (min-width: 960px) {
+  .threatMapRow { grid-template-columns: minmax(0, 31%) minmax(0, 69%); }
+  .threatMapRow > div:last-child { border-top: 0; border-left: 1px solid #e4e9e2; }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Argus">
+  <rect width="128" height="128" rx="28" fill="#1e2721"/>
+  <g fill="none" stroke="#f8f7f4" stroke-width="6" stroke-linecap="round">
+    <path d="M13 64C27 42 45 32 64 32s37 10 51 32C101 86 83 96 64 96S27 86 13 64Z"/>
+    <circle cx="64" cy="64" r="17"/>
+  </g>
+  <circle cx="64" cy="64" r="6" fill="#e89370"/>
+</svg>

@@ -1,0 +1,80 @@
+name: Calidad y seguridad
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: agentic_tm_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d agentic_tm_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6.1.0
+        with:
+          version: 11.1.2
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version-file: '.node-version'
+          cache: pnpm
+      - name: Instalar dependencias inmutables
+        run: pnpm install --frozen-lockfile
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Dependencias Python de validación
+        run: python -m pip install -r requirements-dev.txt
+      - name: Migraciones PostgreSQL 16
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/agentic_tm_test
+        run: pnpm drizzle:migrate && pnpm db:verify:postgres
+      - name: Drift de migraciones
+        run: pnpm drizzle:check
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Tests
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Standalone aislado con servicios sintéticos
+        run: pnpm test:standalone
+      - name: Imagen Docker
+        run: docker build -t agentictm-smoke . && pnpm test:docker
+      - name: Dependencias vulnerables (high/critical)
+        run: pnpm audit --audit-level=high
+      - name: Enlaces de documentación
+        run: pnpm check:docs
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Instalar Gitleaks CLI verificado
+        run: sh scripts/install-gitleaks.sh "$RUNNER_TEMP/gitleaks"
+      - name: Verificar detector con secreto sintético
+        run: node scripts/test-secret-scanner.mjs "$RUNNER_TEMP/gitleaks/gitleaks"
+      - name: Revisar historial
+        run: '"$RUNNER_TEMP/gitleaks/gitleaks" git . --config .gitleaks.toml --redact --no-banner'

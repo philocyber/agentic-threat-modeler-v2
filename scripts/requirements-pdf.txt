@@ -1,0 +1,4 @@
+# Local extraction and local layout inference; no external API calls.
+pdfplumber==0.11.9
+pymupdf4llm==1.28.2
+rapidocr==3.9.2

@@ -1,0 +1,13 @@
+.inspector { background: #fbfcfa; }
+.metrics { gap: .6rem; }
+.metric { min-width: 0; padding: .9rem 1rem; border-color: #dde6da; border-radius: 13px; background: #f4f8f2; }
+.metric p:first-child { color: #607365; }
+.metric p:last-child { color: #1d2b20; font-size: 1.2rem; }
+.entry { overflow: hidden; border-color: #dfe6dc; border-radius: 13px; }
+.entry > summary { background: #f5f8f3; }
+.entry > summary:hover { background: #eef4ec; }
+.entry > summary span { border-radius: 999px; }
+.entry :global(details.border) { border-radius: 10px; }
+.plan { border-color: #dce5d9; border-radius: 14px; background: #edf3ea; }
+.plan h3 { font-family: var(--font-archivo), Arial, sans-serif; font-size: 1rem; letter-spacing: -.025em; }
+@media (max-width: 640px) { .inspector { padding: 1rem; } .metric { padding: .75rem; } }

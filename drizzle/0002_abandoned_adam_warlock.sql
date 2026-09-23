@@ -1,0 +1,4 @@
+ALTER TABLE "auth_logs" ALTER COLUMN "event_type" SET DATA TYPE text;--> statement-breakpoint
+DROP TYPE "public"."auth_event_type";--> statement-breakpoint
+CREATE TYPE "public"."auth_event_type" AS ENUM('login_success', 'login_failed', 'logout', 'token_issued', 'token_refresh', 'token_revoked', 'service_account_auth', 'service_account_auth_failed', 'analysis_requested', 'analysis_completed', 'analysis_failed', 'threat_justified', 'threat_dismissed', 'threat_confirmed', 'threat_comment_added', 'threat_review_updated', 'user_created', 'user_deactivated', 'password_changed', 'service_account_created', 'service_account_rotated', 'rag_index_updated');--> statement-breakpoint
+ALTER TABLE "auth_logs" ALTER COLUMN "event_type" SET DATA TYPE "public"."auth_event_type" USING "event_type"::"public"."auth_event_type";

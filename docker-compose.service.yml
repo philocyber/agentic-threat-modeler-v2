@@ -1,0 +1,63 @@
+# Future shared deployment: include explicitly with docker-compose.yml.
+services:
+  # Optional: run the Next.js app and pipeline worker in Docker.
+  # Prefer `make run` for local development with hot reload.
+  app:
+    build: .
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-password}@postgres-db:5432/${DB_NAME:-agentic-tm}
+      SERVICE_AUTH_REQUIRED: "true"
+      SERVICE_AUTH_TOKENS: ${SERVICE_AUTH_TOKENS:?SERVICE_AUTH_TOKENS is required for the app profile}
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_QUICK_MODEL: ${OLLAMA_QUICK_MODEL:-qwen3.5:4b}
+      OLLAMA_DEEP_MODEL: ${OLLAMA_DEEP_MODEL:-qwen3.5:9b}
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: 8000
+      EMBEDDING_PROVIDER: ollama
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-qwen3-embedding:4b}
+      PIPELINE_TIMEOUT_MS: ${PIPELINE_TIMEOUT_MS:-600000}
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+      worker:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - agentictm-local-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  worker:
+    build: .
+    command: ["node", "build/pipeline-worker.cjs"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-password}@postgres-db:5432/${DB_NAME:-agentic-tm}
+      SERVICE_AUTH_REQUIRED: "true"
+      SERVICE_AUTH_TOKENS: ${SERVICE_AUTH_TOKENS:?SERVICE_AUTH_TOKENS is required for the app profile}
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_QUICK_MODEL: ${OLLAMA_QUICK_MODEL:-qwen3.5:4b}
+      OLLAMA_DEEP_MODEL: ${OLLAMA_DEEP_MODEL:-qwen3.5:9b}
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: 8000
+      EMBEDDING_PROVIDER: ollama
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-qwen3-embedding:4b}
+      PIPELINE_TIMEOUT_MS: ${PIPELINE_TIMEOUT_MS:-600000}
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - agentictm-local-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+

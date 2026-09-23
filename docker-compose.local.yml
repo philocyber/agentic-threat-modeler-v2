@@ -1,0 +1,104 @@
+name: agentictm
+
+services:
+  ollama:
+    image: ${OLLAMA_IMAGE:-ollama/ollama:0.34.1}
+    profiles: [local-models]
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 20s
+    networks:
+      - agentictm-local-network
+
+  # One-shot initializer used by the platform launchers before app and worker.
+  # Re-running it is safe: Ollama reuses layers already stored in ollama_data.
+  ollama-models:
+    image: ${OLLAMA_IMAGE:-ollama/ollama:0.34.1}
+    profiles: [local-models]
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        seen=" "
+        for model in "$${OLLAMA_QUICK_MODEL}" "$${OLLAMA_DEEP_MODEL}" "$${EMBEDDING_MODEL}"; do
+          case "$$seen" in
+            *" $$model "*) continue ;;
+          esac
+          echo "Preparing Ollama model: $$model"
+          ollama pull "$$model"
+          seen="$$seen$$model "
+        done
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_QUICK_MODEL: ${OLLAMA_QUICK_MODEL:-qwen3.5:4b}
+      OLLAMA_DEEP_MODEL: ${OLLAMA_DEEP_MODEL:-qwen3.5:9b}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-qwen3-embedding:4b}
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - agentictm-local-network
+
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+    environment: &agentictm-environment
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      RAG_DEFAULT_ENABLED: ${RAG_DEFAULT_ENABLED:-true}
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_QUICK_MODEL: ${OLLAMA_QUICK_MODEL:-qwen3.5:4b}
+      OLLAMA_DEEP_MODEL: ${OLLAMA_DEEP_MODEL:-qwen3.5:9b}
+      OLLAMA_QUICK_NUM_CTX: ${OLLAMA_QUICK_NUM_CTX:-16384}
+      OLLAMA_DEEP_NUM_CTX: ${OLLAMA_DEEP_NUM_CTX:-32768}
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: 8000
+      EMBEDDING_PROVIDER: ollama
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-qwen3-embedding:4b}
+      KNOWLEDGE_BASE_PATH: /app/knowledge_base
+      AGENTICTM_WORKSPACE_ROOT: /home/nextjs/.agentictm/projects
+      CREDENTIALS_READ_ONLY: "true"
+      PIPELINE_TIMEOUT_MS: ${PIPELINE_TIMEOUT_MS:-3600000}
+      PIPELINE_PHASE_TIMEOUT_MS: ${PIPELINE_PHASE_TIMEOUT_MS:-900000}
+      BEDROCK_AWS_REGION: ${BEDROCK_AWS_REGION:-us-east-1}
+      BEDROCK_AWS_ACCESS_KEY_ID: ${BEDROCK_AWS_ACCESS_KEY_ID:-}
+      BEDROCK_AWS_SECRET_ACCESS_KEY: ${BEDROCK_AWS_SECRET_ACCESS_KEY:-}
+      BEDROCK_AWS_SESSION_TOKEN: ${BEDROCK_AWS_SESSION_TOKEN:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      KIMI_API_KEY: ${KIMI_API_KEY:-}
+      CURSOR_API_KEY: ${CURSOR_API_KEY:-}
+    volumes:
+      - knowledge_data:/app/knowledge_base
+      - workspace_data:/home/nextjs/.agentictm
+    depends_on:
+      chromadb:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - agentictm-local-network
+
+  worker:
+    build: .
+    command: ["node", "build/pipeline-worker.cjs"]
+    environment: *agentictm-environment
+    volumes:
+      - knowledge_data:/app/knowledge_base
+      - workspace_data:/home/nextjs/.agentictm
+    depends_on:
+      chromadb:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - agentictm-local-network
+
+volumes:
+  knowledge_data:
+  workspace_data:
+  ollama_data:

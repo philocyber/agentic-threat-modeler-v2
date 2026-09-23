@@ -1,0 +1,89 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# RSA keys for JWT
+.keys/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (ignore all except .env.example)
+.env*
+!.env.example
+!.env.docker.example
+
+# Tool-wide technical and corporate RAG corpora may contain sensitive material.
+# Keep the documentation contract, never the local corpus contents.
+/knowledge_base/**
+!/knowledge_base/
+!/knowledge_base/README.md
+
+# Local project workspaces are user data, never repository content.
+/.agentictm/
+/projects/
+/workspaces/
+**/project.json
+**/project.db*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/.github/skills
+
+# Local state and authoring materials (never part of the source distribution)
+/promo/
+/data/
+/output/
+/tmp/
+/.impeccable/
+/.pnpm-store/
+/.cursor/
+/.agents/
+/.codex/
+/dist/
+*.log
+__pycache__/
+
+# Local review history and agent execution reports
+/docs/archive/
+/docs/development/cleanup-status.md
+/docs/development/validation-*.json
+
+# Presentation videos retained locally
+/public/Argus-Espanol-1080p.mp4
+/public/Argus-English-1080p.mp4
+/public/AgenticTM-Espanol-1080p.mp4
+/public/AgenticTM-English-1080p.mp4
+
+# Local PDF conversion environment
+/.venv-pdf/

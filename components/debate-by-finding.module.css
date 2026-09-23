@@ -1,0 +1,67 @@
+.layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.listSlot { order: 2; min-width: 0; }
+.list {
+  position: relative;
+  max-height: 520px;
+  overflow-y: auto;
+  display: grid;
+  align-content: start;
+  gap: .4rem;
+  padding: .5rem;
+  border-color: #dfe6dc;
+  border-radius: 16px;
+  background: #f5f8f3;
+}
+.list button { border: 1px solid #e2e8df; border-radius: 11px; background: #fff; transition: border-color .18s ease, background .18s ease; }
+.list button:hover { border-color: #aab9aa; background: #fafcf9; }
+.list button[aria-current='true'] { border-color: #203424; background: #e9f2e7; box-shadow: inset 0 0 0 1px #203424, 0 4px 12px rgb(32 52 36 / 7%); }
+.list button:focus-visible { outline: 3px solid #203424; outline-offset: 2px; }
+.list button:last-child { border-bottom: 1px solid #e2e8df; }
+.listMeta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.selectedMarker { padding: .15rem .45rem; border-radius: 999px; background: #203424; color: #fff; font-size: .55rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+
+.article {
+  order: 1;
+  overflow: hidden;
+  border-color: #dfe6dc;
+  border-radius: 17px;
+}
+.article > header { background: #f6f9f4; }
+.article > header span { border-radius: 6px; }
+.titleRow { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; margin-top: .55rem; }
+.titleRow h4 { flex: 1; min-width: 0; }
+.reviewLink { flex: none; color: #69776c; font-size: .68rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.reviewLink:hover { color: #203424; }
+.conclusion { background: #edf3ea; }
+.conclusion > p:first-child { color: #536e58; }
+.conclusionText { margin-top: .45rem; color: #233427; font-size: .82rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.roundPositions { display: grid; }
+.roundPositions section { padding: .9rem 1rem; }
+.article button { border-radius: 999px; }
+.article :global(details) { border-radius: 10px; }
+
+.mobilePicker {
+  display: block;
+}
+.mobilePicker select { border-radius: 10px; }
+
+@media (min-width: 1024px) {
+  .layout {
+    align-items: stretch;
+    grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .listSlot { order: 1; position: relative; min-height: 0; }
+  .list { position: absolute; inset: 0; width: 100%; height: 100%; max-height: none; }
+  .article { order: 2; }
+  .mobilePicker { display: none; }
+  .roundPositions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) { .titleRow { align-items: start; flex-direction: column; } }
+
+@media (prefers-reduced-motion: reduce) { .list button { transition: none; } }
