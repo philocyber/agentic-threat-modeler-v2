@@ -205,6 +205,6 @@ The running application also provides current operator documentation at `/docs`.
 
 ## Project status
 
-Argus is an experimental, **source-available** project under the [PolyForm Perimeter License 1.0.1](LICENSE). Individuals and companies may run and adapt it for their own internal work, including replacing the branding. The license also permits sharing copies and modifications with its required notices. It does not permit providing a competing threat-modeling product or service to others, whether paid or free. This is not an OSI-approved open-source license. Read the [usage summary](PROJECT_STATUS.md) and the license before reuse or redistribution. The [earlier Python repository](https://github.com/philocyber/agent-threat-modeler) remains a separate MIT-licensed release.
+Argus is an experimental, **open-source** project under the [Apache License 2.0](LICENSE). You may use, modify, rebrand, redistribute, and sell it, including unchanged copies and hosted services, subject to the license's redistribution conditions. Apache-2.0 does not grant rights to use the PhiloCyber name or logo as your own brand. Read the [usage summary](PROJECT_STATUS.md) and the license before redistribution. The [earlier Python repository](https://github.com/philocyber/agent-threat-modeler) remains a separate MIT-licensed release.
 
 Some existing workspace paths, environment variables, browser storage keys, and webhook headers still use the previous technical identifiers. They are retained so existing projects and integrations keep working after the Argus rebrand.

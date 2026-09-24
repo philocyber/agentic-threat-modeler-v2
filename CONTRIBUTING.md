@@ -8,6 +8,6 @@ Before changing code, read the [local setup](docs/getting-started/local.md). Use
 
 Keep pull requests focused. Explain the user-facing change, the evidence behind it, the commands you ran, and any limitation that remains. Update current documentation in `docs/` and summarize material product changes in `CHANGELOG.md`. Do not copy agent transcripts or real run data into fixtures or documentation.
 
-Contributions to this V2 repository are distributed under its [source-available license](LICENSE), subject to the required [notice](NOTICE). By submitting a contribution, confirm that you have the rights needed to contribute it under those terms. The [earlier Python repository](https://github.com/philocyber/agent-threat-modeler) has separate MIT terms.
+Contributions to this repository are distributed under the [Apache License 2.0](LICENSE), subject to the [notice](NOTICE). By submitting a contribution, confirm that you have the rights needed to contribute it under those terms. The [earlier Python repository](https://github.com/philocyber/agent-threat-modeler) has separate MIT terms.
 
 Keep agent instructions, review notes, real run data, and draft documentation outside the tracked tree. For source packages, run `pnpm package:source /path/to/new/directory`; review its `DISTRIBUTION-MANIFEST.json` and secret scan before sharing it. The allowlist is in `source-distribution.json`.
