@@ -181,7 +181,7 @@ El perfil corporativo recomendado exige:
 - Secrets Manager y permisos IAM de mínimo privilegio.
 - monitoreo de conexiones, storage, memoria, CPU y eventos.
 
-Ver [AWS_RDS_RUNBOOK.md](../operations/aws-rds.md).
+Ver [runbook de RDS](../operations/aws-rds.md).
 
 ## Riesgos residuales prioritarios
 

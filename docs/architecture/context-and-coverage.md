@@ -2,7 +2,7 @@
 
 This guide describes current behavior,
 not a claim of exhaustive threat detection. Product summary: `/docs#context-coverage`
-and `/docs#finding-quality`. Output configuration: [LLM_TOKEN_LIMITS.md](llm-token-limits.md).
+and `/docs#finding-quality`. Output configuration: [LLM token limits](llm-token-limits.md).
 
 ## Why a large model window is not enough
 
@@ -205,17 +205,12 @@ batches and coverage blocks are visible errors, not an assurance of exhaustive r
 
 When changing ingestion, extraction, sampling, prompt budgets, provider limits or
 scoring, update this guide and the matching `/docs` sections in the same change.
-Update `LLM_TOKEN_LIMITS.md` for configuration changes and pipeline/current-state
+Update `llm-token-limits.md` for configuration changes and pipeline/current-state
 notes for behavioral changes. Keep implemented behavior separate from planned work;
 validate the public docs route without triggering model generation. No automatic
 documentation synchronization is implemented.
 
-## Live-run correction: verified Kimi capacities
-
-A regression run, `tm_73c030e8-487e-4f1d-825c-919f245f9c09`,
-finished extraction but stopped before analyst inference because the 32K fallback,
-with a 16K output reserve, left only 18,083 source characters for reconciliation.
-This was an application capacity-configuration failure, not a provider rejection.
+## Hosted model capacities
 
 Exact Kimi API IDs now default to verified capacities: `kimi-k2.6` 262,144 tokens
 and `kimi-k3` 1,000,000 tokens (conservative interpretation of 1M).

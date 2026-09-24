@@ -74,6 +74,12 @@ next-env.d.ts
 *.log
 __pycache__/
 
+# Local assistant instructions and unpublished documentation
+/AGENTS.md
+/CLAUDE.md
+/copilot-instructions.md
+/notion-docs/
+
 # Local review history and agent execution reports
 /docs/archive/
 /docs/development/cleanup-status.md

@@ -117,12 +117,7 @@ selected tier output cap is reserved before source packets are planned. These
 settings are included in the resume fingerprint. Changing model name requires a
 separate capacity entry; overrides are not copied automatically between models.
 
-## Live-run correction: verified Kimi capacities
-
-A regression run, `tm_73c030e8-487e-4f1d-825c-919f245f9c09`,
-finished extraction but stopped before analyst inference because the 32K fallback,
-with a 16K output reserve, left only 18,083 source characters for reconciliation.
-This was an application capacity-configuration failure, not a provider rejection.
+## Kimi capacity checks
 
 Exact Kimi API IDs now default to verified capacities: `kimi-k2.6` 262,144 tokens
 and `kimi-k3` 1,000,000 tokens (conservative interpretation of 1M).

@@ -12,7 +12,7 @@ producción exige `SERVICE_AUTH_TOKENS` (bearer) y ownership por
 
 Diferido: OAuth/JWT para UI, MFA, identidad estable y scopes finos si se
 despliega como producto multi-usuario (ver
-[DEPLOYMENT_SERVICE.md](../operations/service.md)).
+[perfil de servicio](../operations/service.md)).
 
 La rotación de `SERVICE_AUTH_TOKENS` también requiere una decisión: el principal
 actual deriva del token y cambia al rotarlo. Hasta migrar a IDs estables hay que
@@ -35,7 +35,7 @@ backups. El TTL técnico actual no sustituye esa política.
 El cliente actual construye `DATABASE_URL` al arrancar y no usa passwords
 dinámicos. Antes de habilitar rotación automática en Secrets Manager hay que
 implementar refresh/reconnect o adoptar el procedimiento blue/green de roles y
-redeploy descrito en [AWS_RDS_RUNBOOK.md](../operations/aws-rds.md).
+redeploy descrito en [runbook de RDS](../operations/aws-rds.md).
 
 ## Webhooks HMAC
 

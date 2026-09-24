@@ -11,7 +11,7 @@ Argus mantiene dos perfiles excluyentes:
   todavía no ofrece identidad humana, SSO ni RBAC.
 
 Para AWS, el perfil recomendado usa Amazon RDS for PostgreSQL. El procedimiento
-detallado está en [AWS_RDS_RUNBOOK.md](aws-rds.md).
+detallado está en [runbook de RDS](aws-rds.md).
 
 ## Arquitectura soportada
 

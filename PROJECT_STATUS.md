@@ -8,4 +8,4 @@ This is not an OSI-approved open-source license. The [earlier Python-based Agent
 
 Ideas, bug reports, evidence-quality feedback, and contributions are welcome under the [contribution guide](CONTRIBUTING.md). For uses outside the license, contact the maintainer before distributing or launching them.
 
-The source distribution excludes organizational documents, analysis results, local databases, and credentials. See the [distribution guide](docs/development/distribution.md).
+The source package uses the `source-distribution.json` allowlist. Organizational documents, analysis results, local databases, and credentials must remain outside the tracked tree.

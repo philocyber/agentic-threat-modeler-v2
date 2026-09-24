@@ -186,6 +186,7 @@ pnpm build
 - RAG embeddings currently depend on Ollama even when analysis uses a cloud provider.
 - A `completed` run means the configured pipeline finished. It does not establish exhaustive document coverage or complete threat discovery.
 - Failed, partial, and unscored results remain explicit rather than being presented as a clean assessment.
+- Analysis PDF uploads currently fail because the upload route uses an incompatible parser adapter. Use UTF-8 text or Markdown for analysis input. PDF export and Knowledge PDF indexing are separate paths.
 
 Read [SECURITY.md](SECURITY.md) before using non-synthetic data or planning a shared deployment.
 
@@ -193,7 +194,7 @@ Read [SECURITY.md](SECURITY.md) before using non-synthetic data or planning a sh
 
 - [Documentation index](docs/README.md)
 - [Local setup](docs/getting-started/local.md)
-- [Product and operating model](docs/architecture/product.md)
+- [Current capabilities and operating model](docs/architecture/current-state.md)
 - [Analysis pipeline](docs/architecture/pipeline.md)
 - [Context, coverage, and quality gates](docs/architecture/context-and-coverage.md)
 - [RAG architecture and inspector](docs/architecture/rag.md)

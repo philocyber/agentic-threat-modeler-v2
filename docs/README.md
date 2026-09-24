@@ -18,8 +18,6 @@ La entrega actual es una **PoC local**. Las capacidades y límites vigentes est�
 - [System review memory](architecture/review-memory.md)
 - [Proveedores LLM](architecture/llm-providers.md)
 - [Límites de tokens](architecture/llm-token-limits.md)
-- [Producto](architecture/product.md)
-- [Diseño visual](architecture/visual-design.md)
 
 ## Operación y seguridad
 
@@ -32,9 +30,5 @@ La entrega actual es una **PoC local**. Las capacidades y límites vigentes est�
 - [Observabilidad y backlog](operations/observability.md)
 - [Diseño de seguridad](security/design.md)
 - [Decisiones pendientes](security/deferred-decisions.md)
-
-## Mantenimiento
-
-- [Distribución del código](development/distribution.md)
 
 La documentación in-app explica cómo usar el producto; estas guías contienen los contratos operativos.

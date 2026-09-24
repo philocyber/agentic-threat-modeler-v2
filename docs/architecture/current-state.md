@@ -187,11 +187,10 @@ Ver [guía vigente y límites](rag.md) y `/docs#rag`.
 
 ## Fuentes operativas
 
-- Despliegue: [DEPLOYMENT_SERVICE.md](../operations/service.md)
-- Amazon RDS: [AWS_RDS_RUNBOOK.md](../operations/aws-rds.md)
-- Seguridad: [07-security/security-design.md](../security/design.md)
-- Observabilidad:
-  [06-observability/observability-design.md](../operations/observability.md)
+- Perfil de servicio: [service.md](../operations/service.md)
+- Amazon RDS: [aws-rds.md](../operations/aws-rds.md)
+- Seguridad: [design.md](../security/design.md)
+- Observabilidad: [observability.md](../operations/observability.md)
 
 
 ## Restricciones de administración y empaquetado

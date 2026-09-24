@@ -60,12 +60,10 @@ flowchart LR
 
 The shared profile table is `lib/agents/debate-profile.ts`. Provider entries change cost and latency controls, while the same correctness rules remain mandatory: stable draft IDs, independent Red and Blue reasoning, copy detection, a written final close, source-backed adjudication for disputes, and no cross-provider fallback.
 
-- Ollama uses at most eight candidates, batches of three, one active batch, a separate evidence pass, provisional summaries, final judge coverage for every finding, and a second repair check. This is the quality-first local workflow requested for the 9B model.
+- Ollama uses at most eight candidates, batches of three, one active batch, a separate evidence pass, provisional summaries, final judge coverage for every finding, and a second repair check.
 - Kimi uses batches of five, one active batch, and direct structured reasoning over the source-backed dossier. The judge receives only disputed or dual-rejected findings. A clean agreement closes from Blue's final control analysis after copy and repetition checks, and stays labeled as a team conclusion.
 - Cursor uses batches of five, up to three active batches, direct structured reasoning, final judge coverage for every finding, and 4,096 reserved output tokens.
 - Other hosted providers inherit conservative batches of three and two-phase evidence until measured results justify an override.
-
-The Cursor v31 baseline spent 62 of 83 model calls in debate, 16.6 minutes, with 1.57 million input and 276,824 output tokens. For the same 11 candidates and two rounds, the v33 geometry has a minimum of 15 core debate calls before repairs, about 76% fewer calls. The Kimi v15 baseline spent 56 of 75 calls in debate and 18 minutes 59 seconds. For 15 candidates, v33 needs 12 core calls when every batch agrees and at most 15 when every batch needs a judge, about 73% to 79% fewer calls. Ollama deliberately does not target fewer calls because its profile prioritizes quality over cost.
 
 Source relevance review is cached by stable candidate batch across debate rounds. A contested-only judge receives only the requested candidates and their side assessments, which avoids resending settled findings.
 
