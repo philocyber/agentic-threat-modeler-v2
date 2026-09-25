@@ -116,6 +116,8 @@ The standard local-model profile downloads Qwen 3.5 4B, Qwen 3.5 9B, and Qwen3 E
 
 When the launcher prints `Argus is ready`, open [http://127.0.0.1:8080](http://127.0.0.1:8080) (or the `APP_PORT` configured in `.env.docker`). Create a project, add a **synthetic** system description, start an analysis, then review the generated findings and their evidence. A successful health check confirms that the services started, not that an analysis has completed. Projects, knowledge, vectors, and models persist in named Docker volumes.
 
+To explore completed work without running a model, select a local project and click **Explore 3 demo scans** (or **Load 3 demo scans** in an existing queue). This imports three snapshots of the same fictional FinanceBot scenario, produced with Ollama, Cursor, and Kimi. The queue marks them **Demo**. Their 7, 15, and 10 findings are model outputs awaiting human review, not validated vulnerabilities. Importing them is optional, adds no other scans, and makes no provider requests. The bundled copies omit local identities, worker logs, and checkpoints; their source classification is marked as a synthetic public demo.
+
 To check prerequisites or inspect a failed start, run the command for your shell:
 
 | Action | Windows Command Prompt | Windows PowerShell | macOS Terminal |

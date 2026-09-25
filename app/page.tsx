@@ -23,6 +23,7 @@ type Analysis = {
   startedAt?: string | null
   archivedAt?: string | null
   reviewSummary?: { pending: number; actionable: number; verify: number; reviewed: number }
+  isDemo?: boolean
 }
 
 const STATUS_STYLE: Record<string, string> = {
@@ -37,6 +38,8 @@ export default function DashboardPage() {
   const [analyses, setAnalyses] = useState<Analysis[]>([])
   const [loading, setLoading] = useState(true)
   const [loadFailed, setLoadFailed] = useState(false)
+  const [projectActive, setProjectActive] = useState(false)
+  const [loadingDemos, setLoadingDemos] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
   const [showArchived, setShowArchived] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set())
@@ -56,6 +59,7 @@ export default function DashboardPage() {
         if (!response.ok) throw new Error('Could not load analyses')
         const body = await response.json()
         setAnalyses(body.data ?? [])
+        setProjectActive(body.projectActive === true)
       } catch (error) {
         if (!(error instanceof DOMException && error.name === 'AbortError')) setLoadFailed(true)
       } finally {
@@ -103,6 +107,22 @@ export default function DashboardPage() {
     setAnalyses((current) => current.map((analysis) => (
       analysis.id === id ? { ...analysis, systemName } : analysis
     )))
+  }
+
+  async function loadDemoScans() {
+    setLoadingDemos(true)
+    setBulkNotice(null)
+    try {
+      const response = await fetch('/api/v1/demo-scans', { method: 'POST' })
+      const body = await response.json() as { imported?: number; existing?: number; error?: string }
+      if (!response.ok) throw new Error(body.error ?? 'Could not load demo scans')
+      setBulkNotice({ tone: 'success', message: `${body.imported ?? 0} demo scans loaded. ${body.existing ?? 0} already present.` })
+      setReloadKey((value) => value + 1)
+    } catch (error) {
+      setBulkNotice({ tone: 'warning', message: error instanceof Error ? error.message : 'Could not load demo scans' })
+    } finally {
+      setLoadingDemos(false)
+    }
   }
 
   function toggleAnalysis(id: string) {
@@ -159,12 +179,18 @@ export default function DashboardPage() {
 
       {loadFailed && <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950"><span>The analysis register could not be loaded.</span><button type="button" onClick={() => setReloadKey((value) => value + 1)} className="min-h-10 border border-amber-700 px-3 text-xs font-semibold hover:bg-amber-100">Try again</button></div>}
       {!loadFailed && analyses.length === 0 && <FirstScanGuide />}
+      {!loadFailed && projectActive && analyses.length === 0 && (
+        <button type="button" onClick={() => void loadDemoScans()} disabled={loadingDemos} className="min-h-11 border border-[#9daca5] bg-white px-4 text-sm font-semibold text-[#333333] disabled:opacity-50">
+          {loadingDemos ? 'Loading demo scans…' : 'Explore 3 demo scans'}
+        </button>
+      )}
+      {analyses.length === 0 && bulkNotice && <p role={bulkNotice.tone === 'warning' ? 'alert' : 'status'} className="text-sm">{bulkNotice.message}</p>}
 
       {!loadFailed && analyses.length > 0 && (
           <section className={`${queueStyles.queuePanel} workbench-panel min-w-0 overflow-hidden`} aria-labelledby="analysis-queue-title">
             <div className={`${queueStyles.queueHeading} flex flex-wrap items-end justify-between gap-3 border-b border-[#e4e4e2] px-5 py-4`}>
               <div><h2 id="analysis-queue-title" className="workbench-heading text-xl">{showArchived ? 'Archived analyses' : 'Analysis queue'}</h2><p className="mt-1 text-sm text-[#666666]">{showArchived ? 'Stored runs kept outside the active review queue.' : 'Recent systems, live runs, and completed review work.'}</p></div>
-              <div className="flex items-center gap-3">{analyses.length > 1 && !showArchived && reviewTarget && <Link href={`/results/${reviewTarget.id}`} className="inline-flex min-h-9 items-center bg-[#111111] px-3 text-xs font-semibold text-white hover:bg-[#333333]">Review priority run</Link>}<button type="button" onClick={changeArchiveView} className="min-h-9 border border-[#9daca5] px-3 text-xs font-semibold text-[#444444] hover:bg-[#f5f5f3]">{showArchived ? 'Show active queue' : 'View archived'}</button><span className="text-sm font-medium text-[#666666]">{analyses.length} {analyses.length === 1 ? 'analysis' : 'analyses'}</span></div>
+              <div className="flex flex-wrap items-center justify-end gap-3">{projectActive && !showArchived && analyses.filter((analysis) => analysis.isDemo).length < 3 && <button type="button" onClick={() => void loadDemoScans()} disabled={loadingDemos} className="inline-flex min-h-9 items-center border border-[#9daca5] px-3 text-xs font-semibold text-[#444444] hover:bg-[#f5f5f3] disabled:opacity-50">{loadingDemos ? 'Loading…' : 'Load 3 demo scans'}</button>}{analyses.length > 1 && !showArchived && reviewTarget && <Link href={`/results/${reviewTarget.id}`} className="inline-flex min-h-9 items-center bg-[#111111] px-3 text-xs font-semibold text-white hover:bg-[#333333]">Review priority run</Link>}<button type="button" onClick={changeArchiveView} className="min-h-9 border border-[#9daca5] px-3 text-xs font-semibold text-[#444444] hover:bg-[#f5f5f3]">{showArchived ? 'Show active queue' : 'View archived'}</button><span className="text-sm font-medium text-[#666666]">{analyses.length} {analyses.length === 1 ? 'analysis' : 'analyses'}</span></div>
             </div>
             {bulkNotice && (
               <div
@@ -203,7 +229,7 @@ export default function DashboardPage() {
                       />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0"><h3 className="min-w-0"><RunTitleEditor analysisId={analysis.id} systemName={analysis.systemName} onRenamed={(systemName) => handleRenamed(analysis.id, systemName)} /></h3><p className="mt-1 text-xs text-[#666666]">{analysis.totalThreats ?? '–'} findings · {analysis.reviewSummary?.pending ?? '—'} pending · {formatShortDate(analysis.createdAt)}</p></div>
+                          <div className="min-w-0"><h3 className="flex min-w-0 flex-wrap items-center gap-2"><RunTitleEditor analysisId={analysis.id} systemName={analysis.systemName} onRenamed={(systemName) => handleRenamed(analysis.id, systemName)} />{analysis.isDemo && <span className="border border-[#9daca5] bg-[#eef5f0] px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase text-[#315b4a]">Demo</span>}</h3><p className="mt-1 text-xs text-[#666666]">{analysis.totalThreats ?? '–'} findings · {analysis.reviewSummary?.pending ?? '—'} pending · {formatShortDate(analysis.createdAt)}</p></div>
                           <span className={`inline-flex shrink-0 px-2 py-1 text-xs font-semibold capitalize ${STATUS_STYLE[analysis.status]}`}>{analysis.status}</span>
                         </div>
                         {analysis.status !== 'pending' && <div className="mt-3"><RunLifecycleActions selectionActive={selectedAnalyses.length > 0} analysis={analysis} onChanged={() => setReloadKey((value) => value + 1)} /></div>}
@@ -233,7 +259,7 @@ export default function DashboardPage() {
                             title={eligible ? `Select ${analysis.systemName}` : 'Only finished analyses can be archived or deleted'}
                           />
                         </td>
-                        <td className="min-w-0 px-2 py-4"><RunTitleEditor analysisId={analysis.id} systemName={analysis.systemName} onRenamed={(systemName) => handleRenamed(analysis.id, systemName)} /><p className="mt-1 text-[11px] text-[#666666]">{analysis.totalThreats ?? '—'} findings · {formatShortDate(analysis.createdAt)}</p></td>
+                        <td className="min-w-0 px-2 py-4"><div className="flex min-w-0 flex-wrap items-center gap-2"><RunTitleEditor analysisId={analysis.id} systemName={analysis.systemName} onRenamed={(systemName) => handleRenamed(analysis.id, systemName)} />{analysis.isDemo && <span className="border border-[#9daca5] bg-[#eef5f0] px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase text-[#315b4a]">Demo</span>}</div><p className="mt-1 text-[11px] text-[#666666]">{analysis.totalThreats ?? '—'} findings · {formatShortDate(analysis.createdAt)}</p></td>
                         <td className="px-2 py-4"><span className={`inline-flex px-2 py-1 text-xs font-semibold capitalize ${STATUS_STYLE[analysis.status]}`}>{analysis.status}</span></td>
                         <td className="px-2 py-4 text-xs"><strong>{analysis.reviewSummary?.pending ?? '—'}</strong> pending<br /><span className="text-[#666666]">{analysis.reviewSummary?.actionable ?? 0} ready to decide</span></td>
                         <td className="px-2 py-4 text-right">{analysis.status !== 'pending' && <RunLifecycleActions selectionActive={selectedAnalyses.length > 0} analysis={analysis} onChanged={() => setReloadKey((value) => value + 1)} />}</td>

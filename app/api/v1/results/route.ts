@@ -32,8 +32,8 @@ export const GET = workspaceRoute(async (req, { workspace }) => {
           : reviewCounts(rows.map(mapRowToUnifiedThreat)),
       }
     }))
-    return Response.json({ data, page, limit, archived })
+    return Response.json({ data, page, limit, archived, projectActive: Boolean(workspace) })
   }
 
-  return Response.json({ data: results, page, limit, archived })
+  return Response.json({ data: results, page, limit, archived, projectActive: Boolean(workspace) })
 })

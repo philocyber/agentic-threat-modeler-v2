@@ -214,6 +214,7 @@ export type AnalysisConfig = {
 }
 
 export type AnalysisMetadata = {
+  demo?: boolean
   source?: string              // 'partner' | 'manual' | 'api'
   rfc_id?: string              // UUID del RFC externo
   rfc_document_id?: string     // UUID del documento

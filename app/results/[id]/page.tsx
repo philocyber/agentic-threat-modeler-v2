@@ -329,6 +329,7 @@ export default async function ResultPage({ params, searchParams }: ResultPagePro
             />
           </h1>
           <div className={resultStyles.headerMeta}>
+            {threatModel.metadata?.demo === true && <span className="border border-[#9daca5] bg-[#eef5f0] px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-[#315b4a]">Demo</span>}
             <span className="flex items-center gap-2 pr-4 font-semibold uppercase tracking-[0.11em] text-[#315b4a]">
               <span className={`h-2 w-2 rounded-full ${threatModel.status === 'completed' ? 'bg-[#555555]' : threatModel.status === 'failed' ? 'bg-red-500' : 'bg-amber-500'}`} />
               {threatModel.cancelRequestedAt ? 'Stopped' : threatModel.status}

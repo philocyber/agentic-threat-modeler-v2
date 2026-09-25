@@ -33,6 +33,7 @@ export type ThreatModelSummary = {
   completedAt: Date | null
   archivedAt: Date | null
   pipelineErrors: string[] | null
+  isDemo: boolean
 }
 
 export type ThreatModelQuery = {
@@ -117,6 +118,7 @@ export async function listThreatModels(query: ThreatModelQuery): Promise<ThreatM
         completedAt: sqliteThreatModels.completedAt,
         archivedAt: sqliteThreatModels.archivedAt,
         pipelineErrors: sqliteThreatModels.pipelineErrors,
+        metadata: sqliteThreatModels.metadata,
       })
       .from(sqliteThreatModels)
       .where(and(statusFilter, archiveFilter, ownerFilter))
@@ -124,7 +126,11 @@ export async function listThreatModels(query: ThreatModelQuery): Promise<ThreatM
       .limit(query.limit)
       .offset(offset)
 
-    return rows.map((row) => ({ ...row, status: row.status as AnalysisStatus }))
+    return rows.map(({ metadata, ...row }) => ({
+      ...row,
+      status: row.status as AnalysisStatus,
+      isDemo: metadata?.demo === true,
+    }))
   }
 
   const statusFilter = query.status ? eq(postgresThreatModels.status, query.status) : undefined
@@ -149,6 +155,7 @@ export async function listThreatModels(query: ThreatModelQuery): Promise<ThreatM
       completedAt: postgresThreatModels.completedAt,
       archivedAt: postgresThreatModels.archivedAt,
       pipelineErrors: postgresThreatModels.pipelineErrors,
+      metadata: postgresThreatModels.metadata,
     })
     .from(postgresThreatModels)
     .where(and(statusFilter, archiveFilter, ownerFilter))
@@ -156,7 +163,11 @@ export async function listThreatModels(query: ThreatModelQuery): Promise<ThreatM
     .limit(query.limit)
     .offset(offset)
 
-  return rows.map((row) => ({ ...row, status: row.status as AnalysisStatus }))
+  return rows.map(({ metadata, ...row }) => ({
+    ...row,
+    status: row.status as AnalysisStatus,
+    isDemo: metadata?.demo === true,
+  }))
 }
 
 export async function getThreatModel(id: string): Promise<StoredThreatModel | null> {
